@@ -4,13 +4,15 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
+
+
 class HBNBCommand(cmd.Cmd):
     """Defines the HolbertonBnB command interpreter.
 
     Attributes:
         prompt (str): The command prompt.
     """
-    
+
     prompt = "(hbnb)"
     __classes = {
         "BaseModel",
@@ -25,15 +27,15 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, arg):
         """Quit command to exit program"""
         return True
-    
+
     def do_EOF(self, arg):
         """Exit the program using EOF (Ctrl+D)"""
         return True
-    
+
     def emptyline(self):
         """Do nothing on an empty line"""
         pass
-    
+
     def do_create(self, arg):
         """Create a new instance of BaseModel and save it to JSON file"""
 
@@ -46,7 +48,8 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id\n
+        """Prints the string representation of an instance\n
+        Based on the class name and id\n
         Ex: $ show BaseModel 1234-1234-1234
         """
         obj = storage.all()
@@ -67,7 +70,8 @@ class HBNBCommand(cmd.Cmd):
             print(my_dict)
 
     def do_destroy(self, arg):
-        """ Deletes an instance based on the class name and id (saves changes into the JSON file)\n
+        """ Deletes an instance based on the class name and id\n
+        Saves changes into the JSON file)\n
         Ex: $ destroy BaseModel 1234-1234-1234
         """
         obj = storage.all()
@@ -88,7 +92,8 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name\n
+        """Prints all string representation of all instances\n
+        Based or not on the class name\n
         Ex: $ all BaseModel or $ all
         """
         my_class = arg.split()[0]
@@ -101,11 +106,12 @@ class HBNBCommand(cmd.Cmd):
                 if value['__class__'] == my_class:
                     print(value.to_dict())
         else:
-            print("** class doesn't exist **") 
+            print("** class doesn't exist **")
 
     def do_update(self, arg):
-        """ Updates an instance based on the class name and id by adding or updating attribute\n
-        saves change into the JSON file\n
+        """ Updates an instance based on the class name and id\n
+        Adds or updates attribute\n
+        Saves change into the JSON file\n
         Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"
         """
         objdict = storage.all()
@@ -119,7 +125,12 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
         elif not arg.split()[3]:
             print("** value missing **")
-        elif hasattr(objdict[arg.split()[0] + '.' + arg.split()[1]], arg.split()[2]):
+        elif arg:
+            class_name = arg.split()[0]
+            id_val = arg.split()[1]
+            value = hasattr(objdict[class_name + '.' + id_val], arg.split()[2])
+            if value is False:
+                return False
             attrname = arg.split()[2]
             attrvalue = arg.split()[3]
             obj = objdict[arg.split()[0] + '.' + arg.split()[1]]

@@ -4,6 +4,8 @@
 import uuid
 from datetime import datetime
 import models
+
+
 class BaseModel():
     """Represents BaseModel class for HBNB project"""
 
@@ -18,11 +20,12 @@ class BaseModel():
         if '__class__' in kwargs:
             del kwargs['__class__']
         if kwargs:
+            dtstr = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
                 if key == 'created_at':
-                    self.created_at = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.created_at = datetime.strptime(value, dtstr)
                 elif key == 'updated_at':
-                    self.updated_at = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.updated_at = datetime.strptime(value, dtstr)
                 else:
                     setattr(self, key, value)
 
@@ -36,13 +39,13 @@ class BaseModel():
         """Returns object instance attributes"""
 
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
-    
+
     def save(self):
         """Saves time when instance is updated"""
 
         self.updated_at = datetime.now()
         models.storage.save()
-    
+
     def to_dict(self):
         """Returns dictionary representation of instance"""
 
@@ -51,4 +54,3 @@ class BaseModel():
         new_dict['updated_at'] = self.updated_at.isoformat()
         new_dict['created_at'] = self.created_at.isoformat()
         return new_dict
-    

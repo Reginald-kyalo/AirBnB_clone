@@ -3,13 +3,15 @@
 
 import json
 import os
+
+
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
         return FileStorage.__objects
-    
+
     def new(self, obj):
         my_key = obj.__class__.name + '.' + str(obj.id)
         FileStorage.__objects[my_key] = obj
@@ -26,8 +28,6 @@ class FileStorage:
                 objdict = json.load(json_file)
                 for o in objdict.values():
                     cls_name = o["__class__"]
-                    self.new(eval(cls_name)(**o))             
+                    self.new(eval(cls_name)(**o))
         else:
             pass
-
-
