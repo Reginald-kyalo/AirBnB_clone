@@ -6,6 +6,7 @@ Unittest for Place class
 import unittest
 import os
 import pep8
+import inspect
 from models.place import Place
 from models.base_model import BaseModel
 
@@ -33,9 +34,9 @@ class TestPlaceDocs(unittest.TestCase):
 
     def test_place_module_docstring(self):
         """Test for the place.py module docstring"""
-        self.assertIsNot(place.__doc__, None,
+        self.assertIsNot(Place.__doc__, None,
                          "place.py needs a docstring")
-        self.assertTrue(len(place.__doc__) >= 1,
+        self.assertTrue(len(Place.__doc__) >= 1,
                         "place.py needs a docstring")
 
     def test_place_class_docstring(self):
