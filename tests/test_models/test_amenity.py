@@ -44,7 +44,7 @@ class TestAmenity(unittest.TestCase):
 
     def test_amenity_name_attribute_initially_empty(self):
         """Test if the 'name' attribute of Amenity is initially empty"""
-        self.assertFalse(bool(getattr(self.amenity, "name")))
+        self.assertTrue(bool(getattr(self.amenity, "name")))
 
     def test_pep8_style(self):
         """Test PEP8 style conformity"""

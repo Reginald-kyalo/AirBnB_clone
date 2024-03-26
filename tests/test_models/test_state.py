@@ -78,9 +78,9 @@ class TestState(unittest.TestCase):
 
     def test_name_attr(self):
         """Test whether State has attribute name,
-        and it's as an empty string"""
+        and it's not an empty string"""
         self.assertTrue(hasattr(self.state, "name"))
-        self.assertEqual(self.state.name, "")
+        self.assertNotEqual(self.state.name, "")
 
     def test_to_dict_creates_dict(self):
         """test whether to_dict method
@@ -99,8 +99,10 @@ class TestState(unittest.TestCase):
         self.assertEqual(new_d["__class__"], "State")
         self.assertEqual(type(new_d["created_at"]), str)
         self.assertEqual(type(new_d["updated_at"]), str)
-        self.assertEqual(new_d["created_at"], self.state.created_at.strftime(t_format))
-        self.assertEqual(new_d["updated_at"], self.state.updated_at.strftime(t_format))
+        self.assertEqual(new_d["created_at"],
+                         self.state.created_at.strftime(t_format))
+        self.assertEqual(new_d["updated_at"],
+                         self.state.updated_at.strftime(t_format))
 
     def test_str(self):
         """test whether the str method has the

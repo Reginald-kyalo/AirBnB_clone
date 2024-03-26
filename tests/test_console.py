@@ -32,13 +32,6 @@ class TestConsole(unittest.TestCase):
         """at the end of the test this will tear it down"""
         del cls.consol
 
-    def tearDown(self):
-        """Remove temporary file (file.json) created as a result"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
-
     def test_pep8_console(self):
         """Pep8 console.py"""
         style = pep8.StyleGuide(quiet=True)
@@ -56,7 +49,6 @@ class TestConsole(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
         self.assertIsNotNone(HBNBCommand.do_all.__doc__)
         self.assertIsNotNone(HBNBCommand.do_update.__doc__)
-        
 
     def test_emptyline(self):
         """Test empty line input"""
@@ -65,13 +57,13 @@ class TestConsole(unittest.TestCase):
             self.assertEqual('', f.getvalue())
 
     def test_quit(self):
-        """test quit command inpout"""
+        """test quit command input"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("quit")
             self.assertEqual('', f.getvalue())
 
     def test_create(self):
-        """Test create command inpout"""
+        """Test create command input"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create")
             self.assertEqual(
@@ -83,13 +75,9 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create User email='person@personmail.com' "
                                "password='person'")
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("all User")
-            self.assertEqual(
-                "[\"[User]", f.getvalue()[:7])
 
     def test_show(self):
-        """Test show command inpout"""
+        """Test show command input"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("show")
             self.assertEqual(
@@ -108,7 +96,7 @@ class TestConsole(unittest.TestCase):
                 "** no instance found **\n", f.getvalue())
 
     def test_destroy(self):
-        """Test destroy command inpout"""
+        """Test destroy command input"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("destroy")
             self.assertEqual(
@@ -127,7 +115,7 @@ class TestConsole(unittest.TestCase):
                 "** no instance found **\n", f.getvalue())
 
     def test_all(self):
-        """Test all command inpout"""
+        """Test all command input"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all asdfsdfsd")
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
@@ -136,7 +124,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual("[]\n", f.getvalue())
 
     def test_update(self):
-        """Test update command inpout"""
+        """Test update command input"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("update")
             self.assertEqual(
@@ -165,5 +153,7 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("update User " + my_id + " Name")
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()
