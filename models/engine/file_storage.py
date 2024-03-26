@@ -20,7 +20,7 @@ class FileStorage:
         file_path (str): path to json file
         objects (dict): dictionary of instances to serialize into json
     """
-    __file_path = None
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
