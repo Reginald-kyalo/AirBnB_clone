@@ -95,8 +95,8 @@ class TestPlace(unittest.TestCase):
     def test_attributes_Place(self):
         """Check if Place has the required attributes"""
         attributes = ['id', 'created_at', 'updated_at', 'city_id', 'user_id',
-                      'name', 'description', 'number_rooms', 
-                      'number_bathrooms', 'max_guest', 'price_by_night', 
+                      'name', 'description', 'number_rooms',
+                      'number_bathrooms', 'max_guest', 'price_by_night',
                       'latitude', 'longitude', 'amenity_ids']
         for attr in attributes:
             self.assertTrue(hasattr(self.place, attr))

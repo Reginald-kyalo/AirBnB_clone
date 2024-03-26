@@ -168,7 +168,6 @@ class HBNBCommand(cmd.Cmd):
         """
         model_name = model_id = attr_name = attr_val = ''
         args = parse(arg)
-        print(args)
         objs = storage.all()
 
         if args:
@@ -179,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
         if model_name not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
-        if len(args) >= 2:
+        if len(args) == 2:
             model_id = args[1]
         else:
             print("** instance id missing **")
@@ -187,6 +186,9 @@ class HBNBCommand(cmd.Cmd):
         if "{}.{}".format(model_name, model_id) not in objs.keys():
             print("** no instance found **")
             return
+        if len(args) == 2:
+            print("** attribute name missing **")
+            return False
         if len(args) == 3:
             try:
                 type(eval(args[2])) != dict
