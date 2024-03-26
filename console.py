@@ -178,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
         if model_name not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
-        if len(args) == 2:
+        if len(args) >= 2:
             model_id = args[1]
         else:
             print("** instance id missing **")
