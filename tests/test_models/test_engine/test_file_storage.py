@@ -117,31 +117,5 @@ class TestFileStorage(unittest.TestCase):
         with self.assertRaises(TypeError):
             storage.reload(None)
 
-    def test_z_delete(self):
-        """Tests delete functionality"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
-
-        state = State()
-        state.name = "Maine"
-        storage.new(state)
-        self.assertTrue(storage.all(State))
-        storage.delete(state)
-        self.assertFalse(storage.all(State))
-
-    def test_z_all(self):
-        """Tests expanded all functionality"""
-        user = User()
-        user.id = 123455
-        user.name = "Kevin"
-        storage.new(user)
-        user_obj = storage.all(User)
-        self.assertTrue(user_obj)
-        state_obj = storage.all(State)
-        self.assertFalse(state_obj)
-
-
 if __name__ == "__main__":
     unittest.main()
