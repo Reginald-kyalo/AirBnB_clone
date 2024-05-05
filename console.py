@@ -75,15 +75,25 @@ class HBNBCommand(cmd.Cmd):
         Ex: (hbnb) create BaseModel
         """
         line = arg
-        if line:
-            if line in HBNBCommand.__classes:
-                new_instance = eval(line)()
-                new_instance.save()
+        instance, args = line.split(' ', 1)
+        if instance:
+            if instance in HBNBCommand.__classes:
+                new_instance = eval(instance)()     
                 print(new_instance.id)
             else:
                 print("** class doesn't exist **")
         else:
             print("** class name missing **")
+
+        if args:
+            for item in args.split():
+                if item:
+                    split_item = item.split('=')
+                if len(split_item) == 2:
+                    k, v = split_item
+                    v = v.strip('"').replace('_', ' ')
+                    setattr(new_instance, k, v)
+        new_instance.save()
 
     def do_show(self, arg):
         """prints string representation of instance

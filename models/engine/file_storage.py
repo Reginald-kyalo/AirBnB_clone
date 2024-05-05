@@ -23,14 +23,29 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """Returns dictionary of available instances"""
-        return FileStorage.__objects
+        a_dict = {}
+        if cls is not None:
+            for k, v in FileStorage.__objects.items():
+                if isinstance(v, cls):
+                    a_dict[k] = v
+            return a_dict
+        else:        
+            return FileStorage.__objects
 
     def new(self, obj):
         """Saves created instances to objects and sets custom key"""
-        my_key = obj.__class__.__name__ + '.' + str(obj.id)
+        my_key = type(obj).__name__ + '.' + str(obj.id)
         FileStorage.__objects[my_key] = obj
+        
+    def delete(self, obj=None):
+        """delete obj from __objects if it’s inside"""
+        if obj is not None:
+            for k, v in FileStorage.__objects.items():
+                if v is obj:
+                    del FileStorage.__objects[k]
+                    break
 
     def save(self):
         """Serializes objects to json file"""
@@ -46,6 +61,7 @@ class FileStorage:
                 objdict = json.load(json_file)
                 for o in objdict.values():
                     cls_name = o["__class__"]
-                    self.new(eval(cls_name)(**o))
+                    cls = globals()[cls_name]
+                    self.new(cls(**o))
         else:
             pass
